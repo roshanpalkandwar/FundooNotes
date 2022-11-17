@@ -13,7 +13,15 @@ const notesSchema = new Schema(
      },
      color: {
       type: String
-     }
+     },
+     isArchived: {
+        type: Boolean,
+        default: false
+      },
+      isTrash: {
+        type: Boolean,
+        default: false
+      }
     },
   {
     timestamps: true
