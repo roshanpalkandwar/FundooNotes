@@ -59,3 +59,19 @@ export const updateNote = async (_id, body) => {
       });
     }
   };
+
+  //trash a note
+export const trashNote = async (_id) => {
+    const note = await Notes.findOne({ _id: _id });
+    const isTrash = note.isTrash === false ? true : false;
+    const data = await Notes.findByIdAndUpdate(
+      {
+        _id
+      },
+      { isTrash: isTrash },
+      {
+        new: true
+      }
+    );
+    return data;
+  };

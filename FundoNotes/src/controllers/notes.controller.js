@@ -132,3 +132,25 @@ export const deleteNote = async (req, res, next) => {
       });
     }
   };
+
+  /**
+ * Controller to trash note a note
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const trashNote = async (req, res, next) => {
+    try {
+      const data = await NoteService.trashNote(req.params._id);
+      res.status(HttpStatus.ACCEPTED).json({
+        code: HttpStatus.ACCEPTED,
+        data: data,
+        message: 'note trashed successfully'
+      });
+    } catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: HttpStatus.BAD_REQUEST,
+        message: 'enter the correct note id'
+      });
+    }
+  };
