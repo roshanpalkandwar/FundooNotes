@@ -44,3 +44,25 @@ export const createNote = async (req, res, next) => {
       });
     }
   };
+
+  /**
+ * Controller to get a note By ID
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+ export const getNote = async (req, res, next) => {
+    try {
+      const data = await NoteService.getNote(req.params._id);
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        data: data,
+        message: 'note fetched successfully'
+      });
+    } catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: HttpStatus.BAD_REQUEST,
+        message: `${error}`
+      });
+    }
+  };
