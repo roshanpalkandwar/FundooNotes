@@ -22,6 +22,26 @@ import * as UserService from '../services/user.service';
   }
 };
 
+/**
+ * Controller to loginuser a user
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+ export const loginUser = async (req, res, next) => {
+  try {
+    const data = await UserService.loginUser(req.body);
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.ok,
+      data: data,
+      message: 'User login successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 /**
  * Controller to get all users available

@@ -1,6 +1,8 @@
 //import { userAuth } from '../middlewares/auth.middleware';
 import User from '../models/user.model';
 import bcrypt from'bcrypt';
+import jwt from 'jsonwebtoken';
+import userModel from '../models/user.model';
 
 
 //registration new user
@@ -11,6 +13,29 @@ export const RegisterNewUser = async (body) => {
   const data=await User.create(body);
   return data;
 };
+
+//login user
+export const loginUser=async(body)=>{
+  const data = await User.findOne({Username:body.Username});
+  if(data !== null){
+    const result=await bcrypt.compare(body.Passaword,data.Passaword);
+    if(result){
+      var token=jwt.sign({Username:data.Username,id:data._id},
+        process.env.SECRET_KEY);
+      return token
+    }
+    else
+    {
+      throw new  Error('invalid password');
+
+    }
+  }else
+  {
+    throw new  Error('imvalid email');
+  }
+ 
+};
+
 
 //create new user
 
