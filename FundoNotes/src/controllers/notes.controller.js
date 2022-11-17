@@ -88,3 +88,25 @@ export const updateNote = async (req, res, next) => {
       });
     }
   };
+
+  /**
+ * Controller to delete a note
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const deleteNote = async (req, res, next) => {
+    try {
+      await NoteService.deleteNote(req.params._id);
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        data: [],
+        message: 'Note deleted successfully'
+      });
+    } catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: HttpStatus.BAD_REQUEST,
+        message: 'note not found'
+      });
+    }
+  };
