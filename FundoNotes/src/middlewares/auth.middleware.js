@@ -20,8 +20,8 @@ export const userAuth = async (req, res, next) => {
         message: 'Authorization token is required'
       };
     bearerToken = bearerToken.split(' ')[1];
-
-    const { user } = await jwt.verify(bearerToken, process.env.SECRET_KEY);
+    const user  = await jwt.verify(bearerToken, process.env.SECRET_KEY);
+    req.body.UserId=user.Username;
     next();
   } catch (error) {
     res.status(HttpStatus.UNAUTHORIZED).json({

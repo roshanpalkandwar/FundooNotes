@@ -12,7 +12,7 @@ const notesSchema = new Schema(
       required: true
      },
      color: {
-      type: String
+      type: String,
      },
      isArchived: {
         type: Boolean,
@@ -21,6 +21,9 @@ const notesSchema = new Schema(
       isTrash: {
         type: Boolean,
         default: false
+      },
+      UserId: {
+        type: String,
       }
     },
   {

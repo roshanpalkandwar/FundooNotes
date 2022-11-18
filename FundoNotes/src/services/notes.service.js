@@ -7,22 +7,22 @@ export const createNote = async (body) => {
 };
 
 //get all notes
-export const getAllNotes = async () => {
-    const data = await Notes.find();
+export const getAllNotes = async (UserId) => {
+    const data = await Notes.find({UserId:UserId});
     return data;
   };
 
   //get a note by id
-export const getNote = async (_id) => {
-    const data = await Notes.findOne({ _id: _id });
+export const getNote = async (_id,UserId) => {
+    const data = await Notes.findOne({ _id: _id,UserId:UserId });
     return data;
   };
 
   //update a note
-export const updateNote = async (_id, body) => {
+export const updateNote = async (_id, UserId,body) => {
     const data = await Notes.findByIdAndUpdate(
       {
-        _id
+        _id:_id,UserId:UserId
       },
       body,
       {
@@ -33,36 +33,30 @@ export const updateNote = async (_id, body) => {
   };
 
   //delete a Single note
-    export const deleteNote = async (id) => {
-    await Notes.findByIdAndDelete(id);
+    export const deleteNote = async (_id,UserId) => {
+    await Notes.findByIdAndDelete({_id:_id,UserId:UserId});
     return '';
 };
 
-/**
- * Controller to archieve a note
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
- export const archiveNote = async (req, res, next) => {
-    try {
-      const data = await NoteService.archiveNote(req.params._id);
-      res.status(HttpStatus.ACCEPTED).json({
-        code: HttpStatus.ACCEPTED,
-        data: data,
-        message: 'note archived successfully'
-      });
-    } catch (error) {
-      res.status(HttpStatus.BAD_REQUEST).json({
-        code: HttpStatus.BAD_REQUEST,
-        message: 'enter the correct note id'
-      });
+//archieve a note
+export const archiveNote = async (_id) => {
+  const note = await Notes.findOne({ _id: _id });
+  const isArchived = note.isArchived === false ? true : false;
+  const data = await Notes.findByIdAndUpdate(
+    {
+      _id
+    },
+    { isArchived: isArchived },
+    {
+      new: true
     }
-  };
+  );
+  return data;
+};
 
   //trash a note
-export const trashNote = async (_id) => {
-    const note = await Notes.findOne({ _id: _id });
+export const trashNote = async (_id,UserId) => {
+    const note = await Notes.findOne({ _id: _id,UserId:UserId });
     const isTrash = note.isTrash === false ? true : false;
     const data = await Notes.findByIdAndUpdate(
       {
