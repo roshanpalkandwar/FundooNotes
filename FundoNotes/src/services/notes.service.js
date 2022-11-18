@@ -19,7 +19,7 @@ export const getNote = async (_id,UserId) => {
   };
 
   //update a note
-export const updateNote = async (_id, UserId,body) => {
+export const updateNote = async (_id, body,UserId,) => {
     const data = await Notes.findByIdAndUpdate(
       {
         _id:_id,UserId:UserId
@@ -39,12 +39,12 @@ export const updateNote = async (_id, UserId,body) => {
 };
 
 //archieve a note
-export const archiveNote = async (_id) => {
-  const note = await Notes.findOne({ _id: _id });
+export const archiveNote = async (_id,UserId) => {
+  const note = await Notes.findOne({ _id: _id,UserId:UserId });
   const isArchived = note.isArchived === false ? true : false;
   const data = await Notes.findByIdAndUpdate(
     {
-      _id
+      _id:_id,UserId:UserId
     },
     { isArchived: isArchived },
     {
@@ -60,7 +60,7 @@ export const trashNote = async (_id,UserId) => {
     const isTrash = note.isTrash === false ? true : false;
     const data = await Notes.findByIdAndUpdate(
       {
-        _id
+        _id:_id,UserId:UserId
       },
       { isTrash: isTrash },
       {
