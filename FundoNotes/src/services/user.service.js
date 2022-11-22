@@ -2,7 +2,11 @@
 import User from '../models/user.model';
 import bcrypt from'bcrypt';
 import jwt from 'jsonwebtoken';
-import userModel from '../models/user.model';
+import * as utils from '../utils/user.util';
+import dotenv from 'dotenv';
+dotenv.config();
+//import userModel from '../models/user.model';
+
 
 
 //registration new user
@@ -82,5 +86,34 @@ export const deleteUser = async (id) => {
 //get single user
 export const getUser = async (_id) => {
   const data = await User.findById(_id);
+  return data;
+};
+
+//for forgot password find the user is authorised or not
+export const ForgottPassword=async(body)=>{
+  const data=await User.findOne({Username:body.Username});
+  if(data!==null){
+    var token=jwt.sign(
+      {id:data._id,Username:data.Username},process.env.SECRET_KEY
+    );
+    await utils.sendMail(body.Username);
+    return token;
+  }else{
+    throw new Error("Invalid Email Please Enter Valid one....");
+  }
+}
+
+//service to reset the password for Authorize User
+export const resetPassword=async(body)=>{
+  const saltRounds=10;
+  const hashPassword=await bcrypt.hash(body.Passaword,saltRounds);
+  body.Passaword=hashPassword;
+  const data=await User.findOneAndUpdate(
+    {Username:body.Username},
+    body,
+    {
+      new:true
+    }
+  );
   return data;
 };
