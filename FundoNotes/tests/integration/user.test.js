@@ -108,12 +108,85 @@ describe('User APIs Test', () => {
     const inputBody={
        "Firstname":"vikas",
         "Lastname":"mehtra",
-        "Username":"vikasmehtrgmail.com",
+        "Username":"vikasmehtr@gmail.com",
         "Passaword":"57"
     }
     it('user details should be saved in database', (done) => {
       request(app)
         .post('/api/v1/users/register')
+        .send(inputBody)
+        .end((err, res) => {
+        expect(res.statusCode).to.be.equal(500);
+        done();
+      });
+     });
+  });
+
+  //1.Test case for  user login
+
+  describe('UserLogin', () => {
+    const inputBody={
+      "Username":"vikasmehtra@gmail.com",
+        "Passaword":"576778"
+    }
+    it('user details should be saved in database', (done) => {
+      request(app)
+        .post('/api/v1/users/login')
+        .send(inputBody)
+        .end((err, res) => {
+        expect(res.statusCode).to.be.equal(200);
+        done();
+      });
+     });
+  });
+ 
+
+   //2.Test case for invalid  Email login
+
+   describe('UserLogin', () => {
+    const inputBody={
+      "Username":"vimehtra@gmail.com",
+        "Passaword":"576778"
+    }
+    it('user details should be saved in database', (done) => {
+      request(app)
+        .post('/api/v1/users/login')
+        .send(inputBody)
+        .end((err, res) => {
+        expect(res.statusCode).to.be.equal(500);
+        done();
+      });
+     });
+  });
+
+  //3.Test case for invalid  password login
+
+  describe('UserLogin', () => {
+    const inputBody={
+      "Username":"vimehtra@gmail.com",
+        "Passaword":"57666778"
+    }
+    it('user details should be saved in database', (done) => {
+      request(app)
+        .post('/api/v1/users/login')
+        .send(inputBody)
+        .end((err, res) => {
+        expect(res.statusCode).to.be.equal(500);
+        done();
+      });
+     });
+  });
+
+  //4.Test case for missing passaword 
+
+  describe('UserLogin', () => {
+    const inputBody={
+      "Username":"vimehtra@gmail.com",
+        "Passaword":"57666778"
+    }
+    it('user details should be saved in database', (done) => {
+      request(app)
+        .post('/api/v1/users/login')
         .send(inputBody)
         .end((err, res) => {
         expect(res.statusCode).to.be.equal(500);

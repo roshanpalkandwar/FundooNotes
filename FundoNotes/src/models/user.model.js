@@ -12,8 +12,8 @@ const userSchema = new Schema(
       type: String,
     },
     Passaword: {
-      type: String
-    },
+      type: String,
+    }
     
 
   },
