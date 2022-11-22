@@ -13,7 +13,8 @@ const userSchema = new Schema(
     },
     Passaword: {
       type: String
-    }
+    },
+    
 
   },
   {

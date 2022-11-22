@@ -26,16 +26,99 @@ describe('User APIs Test', () => {
     done();
   });
 
-  describe('GET /users', () => {
-    it('should return empty array', (done) => {
-      request(app)
-        .get('/api/v1/users')
-        .end((err, res) => {
-          expect(res.statusCode).to.be.equal(200);
-          expect(res.body.data).to.be.an('array');
+    //1 Test case for user registration
 
-          done();
-        });
+    describe('UserRegistration', () => {
+      const inputBody={
+        "Firstname":"vikas",
+        "Lastname":"Mehtra",
+        "Username":"vikasmehtra@gmail.com",
+        "Passaword":"576778"
+      }
+      it('user details should be saved in database', (done) => {
+        request(app)
+          .post('/api/v1/users/register')
+          .send(inputBody)
+          .end((err, res) => {
+            expect(res.statusCode).to.be.equal(201);
+            done();
+          });
+      });
     });
+    //2.Test case for invalid FirstName
+  describe('UserRegistration', () => {
+    const inputBody={
+       "Firstname":"vi",
+        "Lastname":"Mehtra",
+        "Username":"vikasmehtra@gmail.com",
+        "Passaword":"576778"
+    }
+    it('user details should be saved in database', (done) => {
+      request(app)
+        .post('/api/v1/users/register')
+        .send(inputBody)
+        .end((err, res) => {
+        expect(res.statusCode).to.be.equal(500);
+        done();
+      });
+     });
+  });
+
+  //3.Test case for invalid Lastname
+  describe('UserRegistration', () => {
+    const inputBody={
+       "Firstname":"vikas",
+        "Lastname":"",
+        "Username":"vikasmehtra@gmail.com",
+        "Passaword":"576778"
+    }
+    it('user details should be saved in database', (done) => {
+      request(app)
+        .post('/api/v1/users/register')
+        .send(inputBody)
+        .end((err, res) => {
+        expect(res.statusCode).to.be.equal(500);
+        done();
+      });
+     });
+  });
+
+
+  //4.Test case for valid email
+  describe('UserRegistration', () => {
+    const inputBody={
+       "Firstname":"vikas",
+        "Lastname":"mehtra",
+        "Username":"vikasmehtrgmail.com",
+        "Passaword":"576778"
+    }
+    it('user details should be saved in database', (done) => {
+      request(app)
+        .post('/api/v1/users/register')
+        .send(inputBody)
+        .end((err, res) => {
+        expect(res.statusCode).to.be.equal(500);
+        done();
+      });
+     });
+  });
+
+  //5.Test case for valid Password
+  describe('UserRegistration', () => {
+    const inputBody={
+       "Firstname":"vikas",
+        "Lastname":"mehtra",
+        "Username":"vikasmehtrgmail.com",
+        "Passaword":"57"
+    }
+    it('user details should be saved in database', (done) => {
+      request(app)
+        .post('/api/v1/users/register')
+        .send(inputBody)
+        .end((err, res) => {
+        expect(res.statusCode).to.be.equal(500);
+        done();
+      });
+     });
   });
 });
