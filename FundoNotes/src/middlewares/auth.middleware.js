@@ -52,7 +52,9 @@ export const userAuthentication= async (req, res, next) => {
     bearerToken = bearerToken.split(' ')[1];
     
     const user = await jwt.verify(bearerToken, process.env.SECRET_KEY);
+    console.log("user========>",user)
     req.body.Username=user.Username;
+    
     
     next();
   } catch (error) {
