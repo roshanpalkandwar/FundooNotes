@@ -40,56 +40,6 @@ export const loginUser=async(body)=>{
  
 };
 
-
-//create new user
-
-export const Registration = async (body) => {
-  const exsit=await User.findOne({Username:body.Username});
-  if(exsit){
-    
-    throw new Error('opps Email Exsit Already');
-  
-  }else
-  {
-    const data = await User.create(body);
-     return data;
-  }
-  
-};
-
-//get all users
-export const getAllUsers = async () => {
-  const data = await User.find();
-  return data;
-};
-
-//update single user
-export const updateUser = async (_id, body) => {
-  const data = await User.findByIdAndUpdate(
-    {
-      _id
-    },
-    body,
-    {
-      new: true
-    }
-  );
-  return data;
-};
-
-//delete single user
-export const deleteUser = async (id) => {
-  await User.findByIdAndDelete(id);
-  return '';
-};
-
-//get single user
-export const getUser = async (_id) => {
-  const data = await User.findById(_id);
-  return data;
-};
-
-//for forgot password find the user is authorised or not
 export const ForgottPassword=async(body)=>{
   const data=await User.findOne({Username:body.Username});
   if(data!==null){
@@ -105,6 +55,7 @@ export const ForgottPassword=async(body)=>{
 
 //service to reset the password for Authorize User
 export const resetPassword=async(body)=>{
+  console.log("body =================>",body)
   const saltRounds=10;
   const hashPassword=await bcrypt.hash(body.Passaword,saltRounds);
   body.Passaword=hashPassword;
