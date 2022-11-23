@@ -3,6 +3,7 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 
 import app from '../../src/index';
+import { id } from '@hapi/joi/lib/base';
 
 describe('User APIs Test', () => {
   before((done) => {
@@ -111,7 +112,7 @@ describe('User APIs Test', () => {
         "Username":"vikasmehtr@gmail.com",
         "Passaword":"57"
     }
-    it('user details should be saved in database', (done) => {
+    it('user registration With Invalid', (done) => {
       request(app)
         .post('/api/v1/users/register')
         .send(inputBody)
@@ -123,17 +124,18 @@ describe('User APIs Test', () => {
   });
 
   //1.Test case for  user login
-
+  var token;
   describe('UserLogin', () => {
     const inputBody={
       "Username":"vikasmehtra@gmail.com",
         "Passaword":"576778"
     }
-    it('user details should be saved in database', (done) => {
+    it('user login Succesfully', (done) => {
       request(app)
         .post('/api/v1/users/login')
         .send(inputBody)
         .end((err, res) => {
+          token=res.body.data;
         expect(res.statusCode).to.be.equal(200);
         done();
       });
@@ -148,7 +150,7 @@ describe('User APIs Test', () => {
       "Username":"vimehtra@gmail.com",
         "Passaword":"576778"
     }
-    it('user details should be saved in database', (done) => {
+    it('user pass invalid Email', (done) => {
       request(app)
         .post('/api/v1/users/login')
         .send(inputBody)
@@ -166,7 +168,7 @@ describe('User APIs Test', () => {
       "Username":"vimehtra@gmail.com",
         "Passaword":"57666778"
     }
-    it('user details should be saved in database', (done) => {
+    it('user Invalid Password saved in database', (done) => {
       request(app)
         .post('/api/v1/users/login')
         .send(inputBody)
@@ -184,7 +186,7 @@ describe('User APIs Test', () => {
       "Username":"vimehtra@gmail.com",
         "Passaword":"57666778"
     }
-    it('user details should be saved in database', (done) => {
+    it('user missing passaword saved in database', (done) => {
       request(app)
         .post('/api/v1/users/login')
         .send(inputBody)
@@ -194,4 +196,97 @@ describe('User APIs Test', () => {
       });
      });
   });
+    
+  //1.create new token //
+  var noteId;
+  describe('creating new note',()=>{
+    const inputBody={
+      "title":"old old",
+      "description":"even even"
+    }
+    it('note created successfully',(done)=>{
+      request(app)
+      .post('/api/v1/notes')
+      .set('Authorization',`Bearer ${token}`)
+      .send(inputBody)
+      .end((err,res)=>{
+
+        noteId=res.body.data._id;
+        console.log("req NoteId=========>",res.body.data._id)
+        expect(res.statusCode).to.be.equal(200);
+        done();
+      });
+    });
+  });
+
+  //2.create note with invalid title//
+  
+  describe('creating new note',()=>{
+    const inputBody={
+      "title":"ol",
+      "description":"even even"
+    }
+    it('note created invalid title',(done)=>{
+      request(app)
+      .post('/api/v1/notes')
+      .set('Authorization',`Bearer ${token}`)
+      .send(inputBody)
+      .end((err,res)=>{
+        
+        expect(res.statusCode).to.be.equal(500);
+        done();
+      });
+    });
+  });
+
+  //3.create note with inavalid Descripation//
+  
+   describe('creating new note',()=>{
+     const inputBody={
+       "title":"ol",
+       "description":"even even"
+     }
+     it('note created invalid title',(done)=>{
+       request(app)
+       .post('/api/v1/notes')
+       .set('Authorization',`Bearer ${token}`)
+       .send(inputBody)
+       .end((err,res)=>{
+         
+         expect(res.statusCode).to.be.equal(500);
+         done();
+       });
+     });
+   });
+
+ //4.get all note//
+   
+   describe('creating new note',()=>{
+     
+     it('note created invalid title',(done)=>{
+       request(app)
+       .get('/api/v1/notes')
+       .set('Authorization',`Bearer ${token}`)
+       
+       .end((err,res)=>{
+         
+         expect(res.statusCode).to.be.equal(200);
+         done();
+       });
+     });
+   });
+
+   describe('Get By Id', () => 
+   { it('Given Note By Id Should Get', (done) => 
+   { request(app) 
+   .get(`/api/v1/notes/${noteId}`) 
+   .set('authorization', `Bearer ${token}`) 
+   .end((err, res) => {
+    expect(res.statusCode).to.be.equal(200); 
+    done(); 
+     });
+    });
+  });
+   
 });
+

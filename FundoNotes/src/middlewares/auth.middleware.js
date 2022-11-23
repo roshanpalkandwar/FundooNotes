@@ -31,19 +31,10 @@ export const userAuth = async (req, res, next) => {
   }
 };
 
-
-/**
- * Middleware to authenticate if user has a valid Authorization token
- * Authorization: Bearer <token>
- *
- * @param {Object} req
- * @param {Object} res
- * @param {Function} next
- */
 export const userAuthentication= async (req, res, next) => {
   try {
     let bearerToken = req.header('Authorization');
-    //console.log(bearerToken);
+    
     if (!bearerToken)
       throw {
         code: HttpStatus.BAD_REQUEST,
@@ -54,8 +45,6 @@ export const userAuthentication= async (req, res, next) => {
     const user = await jwt.verify(bearerToken, process.env.SECRET_KEY);
     console.log("user========>",user)
     req.body.Username=user.Username;
-    
-    
     next();
   } catch (error) {
     res.status(HttpStatus.UNAUTHORIZED).json({

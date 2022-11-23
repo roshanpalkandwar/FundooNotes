@@ -37,6 +37,4 @@ try{
 }catch (error){return error;}
 }
 
- //sendMail(Username)
-  //.then(Result => console.log("Email Sent.....", Result))
-  //.catch((error) => console.log(error.message));
+ 
