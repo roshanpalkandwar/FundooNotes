@@ -246,7 +246,7 @@ describe('User APIs Test', () => {
        "title":"ol",
        "description":"even even"
      }
-     it('note created invalid title',(done)=>{
+     it('note created invalid Descripation',(done)=>{
        request(app)
        .post('/api/v1/notes')
        .set('Authorization',`Bearer ${token}`)
@@ -261,9 +261,9 @@ describe('User APIs Test', () => {
 
  //4.get all note//
    
-   describe('creating new note',()=>{
+   describe('get all note',()=>{
      
-     it('note created invalid title',(done)=>{
+     it('get All Note should Get',(done)=>{
        request(app)
        .get('/api/v1/notes')
        .set('Authorization',`Bearer ${token}`)
@@ -276,6 +276,8 @@ describe('User APIs Test', () => {
      });
    });
 
+
+   //5.get notes by Id
    describe('Get By Id', () => 
    { it('Given Note By Id Should Get', (done) => 
    { request(app) 
@@ -287,6 +289,20 @@ describe('User APIs Test', () => {
      });
     });
   });
+
+  //6.get notes with invalid Id
+  describe('Get invalid Id', () => 
+  { it('Given Note By invalid Id Should Get', (done) => 
+  { request(app) 
+  .get(`/api/v1/notes/$`) 
+  .set('authorization', `Bearer ${token}`) 
+  .end((err, res) => {
+   expect(res.statusCode).to.be.equal(400); 
+   done(); 
+    });
+   });
+ });
+  
    
 });
 
