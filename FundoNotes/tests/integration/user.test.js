@@ -243,8 +243,8 @@ describe('User APIs Test', () => {
   
    describe('creating new note',()=>{
      const inputBody={
-       "title":"ol",
-       "description":"even even"
+       "title":"old old",
+       "description":"eve"
      }
      it('note created invalid Descripation',(done)=>{
        request(app)
@@ -303,6 +303,61 @@ describe('User APIs Test', () => {
    });
  });
   
-   
+ //7. test case to update the note 
+ describe('updating the note',()=>{
+  const inputBody={
+    "color":"yellow"
+  }
+  it('note updated successfully',(done)=>{
+    request(app)
+    .put(`/api/v1/notes/${noteId}`)
+    .set('Authorization',`Bearer ${token}`)
+    .send(inputBody)
+    .end((err,res)=>{
+      console.log(res.body);
+      expect(res.statusCode).to.be.equal(202);
+      done();
+    });
+  });
+ });
+
+//  //8.delete notes by Id
+//  describe('Get By Id', () => 
+//  { it('Note Deleted Sucessfully', (done) => 
+//  { request(app) 
+//  .delete(`/api/v1/notes/${noteId}`) 
+//  .set('authorization', `Bearer ${token}`) 
+//  .end((err, res) => {
+//   expect(res.statusCode).to.be.equal(200); 
+//   done(); 
+//        });
+//     });
+//   });
+
+  //9.Archieve notes by Id
+ describe('note Archive By Id', () => 
+ { it('Note Archive Sucessfully', (done) => 
+ { request(app) 
+ .put(`/api/v1/notes/${noteId}/archive`) 
+ .set('authorization', `Bearer ${token}`) 
+ .end((err, res) => {
+  expect(res.statusCode).to.be.equal(202); 
+  done(); 
+       });
+    });
+  });
+
+  //10.Trash notes by Id
+ describe('note Trash By Id', () => 
+ { it('Note Trash Sucessfully', (done) => 
+ { request(app) 
+ .put(`/api/v1/notes/${noteId}/trash`) 
+ .set('authorization', `Bearer ${token}`) 
+ .end((err, res) => {
+  expect(res.statusCode).to.be.equal(202); 
+  done(); 
+       });
+    });
+  });
 });
 
