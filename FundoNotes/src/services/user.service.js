@@ -35,7 +35,7 @@ export const loginUser=async(body)=>{
     }
   }else
   {
-    throw new  Error('imvalid email');
+    throw new  Error('invalid email');
   }
  
 };
