@@ -1,0 +1,111 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "v1",
+     "title": "FUNDOONOTES",
+     "description": "FUNDOONOTES CLI"
+    },
+    "host": "localhost:5000",
+    "basePath": "/api/v1/",
+    "tags": [
+        {
+        "name": "CLI",
+        "description": "Creating user"
+        }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+      "/users/register": {
+        "post": {
+          "tags": ["Users"],
+          "description": "New user Registration",
+          "parameters": [
+            {
+              "name": "create  user",
+              "in": "body",
+              "description": "User",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces":
+           ["application/json"],
+          "responses": {
+            "201": {
+              "description": "User created"
+            },
+            "400": {
+                "description": "BAD REQUEST"
+              },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+  
+      "/users/login": {
+        "post": {
+          "tags": ["Login"],
+          "description": "User login",
+          "parameters": [
+            {
+              "name": "login user",
+              "in": "body",
+              "description": "login",
+              "schema": {
+                "$ref": "#/definitions/login"
+              }
+            }
+          ],
+          "produces":
+           ["application/json"],
+          "responses": {
+            "200": {
+              "description": "login user successfuly!!!!!!"
+            },
+            "400": {
+                "description": "BAD REQUEST"
+            },
+            "500": {
+              "description": "Internal server error"
+             }
+            }
+          }
+        }
+      },
+      "definitions": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "Firstname": {
+              "type": "string"
+            },
+            "Lastname": {
+              "type": "string"
+            },
+            "Username": {
+              "type": "string"
+            },
+            "Passaword": {
+              "type": "string"
+            }
+          }
+        },
+    
+        "login": {
+          "type": "object",
+          "properties": {
+             "Username": {
+              "type": "string"
+             },
+             "Passaword": {
+              "type": "string"
+             }
+            }
+        }
+    }
+}
