@@ -334,6 +334,76 @@
           }
         ]
       }
+    },
+    "/notes/{id}/archive": {
+      "put": {
+        "tags": [
+          "Note"
+        ],
+        "description": "archive Notes",
+        "parameters": [
+          {
+            "name": "id" ,
+            "in":"path",
+            "description": "archive Notes"
+            
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": " archive Notes successfuly !!!!!!"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/notes/{id}/trash": {
+      "put": {
+        "tags": [
+          "Note"
+        ],
+        "description": "trash Notes",
+        "parameters": [
+          {
+            "name": "id" ,
+            "in":"path",
+            "description": "trash Notes"
+            
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": " Trash Notes successfuly !!!!!!"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
