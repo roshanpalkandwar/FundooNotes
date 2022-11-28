@@ -1,7 +1,10 @@
 import Notes from '../models/notes.model';
+import { client } from '../config/redis';
+import { cli } from 'winston/lib/winston/config';
 
 //create for new note
 export const createNote = async (body) => {
+  await client.del('getAllData');
   const data = await Notes.create(body);
   return data;
 };
@@ -9,6 +12,7 @@ export const createNote = async (body) => {
 //get all notes
 export const getAllNotes = async (UserId) => {
     const data = await Notes.find({UserId:UserId});
+    await client.set('getAllData',JSON.stringify(data))
     return data;
   };
 
