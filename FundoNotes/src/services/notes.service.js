@@ -19,6 +19,7 @@ export const getAllNotes = async (UserId) => {
   //get a note by id
 export const getNote = async (_id,UserId) => {
     const data = await Notes.findOne({ _id: _id,UserId:UserId });
+    await client.set('getById', JSON.stringify(data));
     return data;
   };
 
