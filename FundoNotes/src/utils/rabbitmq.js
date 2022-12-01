@@ -1,61 +1,59 @@
+import { sendMailToCreateUser } from './user.util';
+
 var amqp = require('amqplib/callback_api');
-
-
-const producer = () => {
-    amqp.connect('amqp://localhost', function (error0, connection) {
-        if (error0) {
-            throw error0;
+export const producer=(queue,msg)=>{
+    amqp.connect(`amqp://localhost`, function(error0, connection) {
+    if (error0) {
+        throw error0;
+    }
+    connection.createChannel(function(error1, channel) {
+        if (error1) {
+            throw error1;
         }
-        connection.createChannel(function (error1, channel) {
-            if (error1) {
-                throw error1;
-            }
 
-            var queue = 'hello';
-            var msg = 'Hello World!';
-
-            channel.assertQueue(queue, {
-                durable: false
-            });
-            channel.sendToQueue(queue, Buffer.from(msg));
-
-            console.log(" [x] Sent %s", msg);
+        channel.assertQueue(queue, {
+            durable: false
         });
-        setTimeout(function () {
-            connection.close();
-            process.exit(0);
-        }, 500);
+        channel.sendToQueue(queue, Buffer.from(msg));
+
+        console.log(` [x] Sent ${msg} `);
     });
-
+    
+});
 }
-producer()
 
-const consumer = () => {
-
-    amqp.connect('amqp://localhost', function (error0, connection) {
-        if (error0) {
-            throw error0;
+export const consumerr=(queue)=>{
+    amqp.connect(`amqp://localhost`, function(error0, connection) {
+    if (error0) {
+        throw error0;
+    }
+    connection.createChannel(function(error1, channel) {
+        if (error1) {
+            throw error1;
         }
-        connection.createChannel(function (error1, channel) {
-            if (error1) {
-                throw error1;
-            }
 
-            var queue = 'hello';
+        channel.assertQueue(queue, {
+            durable: false
+        });
 
-            channel.assertQueue(queue, {
-                durable: false
-            });
+        console.log(` [*] Waiting for messages in ${queue}. To exit press CTRL+C`, );
 
-            console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
-
-            channel.consume(queue, function (msg) {
-                console.log(" [x] Received %s", msg.content.toString());
-            }, {
-                noAck: true
-            });
+            channel.consume(queue,async function(msg){
+            const objectJson=msg.content.toString().toString();
+            const objectNormal=JSON.parse(objectJson);
+            const Username=objectNormal.Username;
+            const Firstname=objectNormal.Firstname;
+            const Lastname=objectNormal.Lastname;
+            const result=await sendMailToCreateUser(Username,Firstname,Lastname);
+            console.log("result============>>>>>><<<<<<<",result);
+            
+        },
+        {
+            noAck: true
         });
     });
-
+});
 }
-consumer();
+consumerr('register');
+
+
