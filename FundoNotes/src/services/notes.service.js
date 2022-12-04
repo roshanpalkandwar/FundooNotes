@@ -1,6 +1,7 @@
 import Notes from '../models/notes.model';
 import { client } from '../config/redis';
 import { cli } from 'winston/lib/winston/config';
+import User from '../models/user.model';
 
 //create for new note
 export const createNote = async (body) => {
@@ -89,3 +90,14 @@ export const trashNote = async (_id,UserId) => {
     );
     return data;
   };
+
+  //add Collaborators to note
+export const addCollaborator = async (_id, Collaborators) => {
+  const Check = await User.find({ id: Collaborators })
+  if (Check != null) {
+    const data = await Notes.findByIdAndUpdate({ _id: _id }, 
+      { $addToSet: { Collaborators: Collaborators } }, 
+      { new: true });
+    return data;
+  }
+};

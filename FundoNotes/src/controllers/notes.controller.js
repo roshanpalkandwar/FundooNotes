@@ -170,3 +170,22 @@ export const trashNote = async (req, res, next) => {
       });
     }
   };
+
+  // Add A Collaborator //
+ export const addCollaborator = async (req, res, next) => {
+  try {
+    const data = await NoteService.addCollaborator(req.params._id,req.body.Collaborators);
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      data: data,
+      message: 'collaborator added successfully'
+    });
+  } catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: `${error}`
+    });
+  }
+};
+
+  
