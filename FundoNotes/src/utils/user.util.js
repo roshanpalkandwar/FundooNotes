@@ -1,3 +1,5 @@
+import { Console } from 'winston/lib/winston/transports'
+
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 
@@ -74,3 +76,7 @@ export async function sendMailToCreateUser(Username,Firstname,Lastname){
 
 
 
+export function sum(a,b){
+    sum=a+b
+    
+}

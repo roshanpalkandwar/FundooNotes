@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import * as utils from '../utils/user.util';
 import * as mq from '../utils/rabbitmq'
 import dotenv from 'dotenv';
+import {sum} from '../utils/user.util'
 dotenv.config();
 //import userModel from '../models/user.model';
 
@@ -19,7 +20,13 @@ export const RegisterNewUser = async (body) => {
 
   const dataRabbit=JSON.stringify(data);
   mq.producer('register',dataRabbit);
+
+      
+
   return data;
+
+
+
   }
   else{
     throw new Error("Oops, User with same EmailId already exists, so use different!!!");
@@ -78,3 +85,6 @@ export const resetPassword=async(body)=>{
   );
   return data;
 };
+
+sum(4,6);
+     console.log(sum);

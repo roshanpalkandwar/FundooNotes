@@ -45,7 +45,7 @@ export const userAuthentication= async (req, res, next) => {
     
     const user = await jwt.verify(bearerToken, process.env.SECRET_KEY);
     console.log("user========>",user)
-    req.body.Username=user.Username;
+    req.body.UserId=user.Username;
     next();
   } catch (error) {
     res.status(HttpStatus.UNAUTHORIZED).json({

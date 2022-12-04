@@ -24,6 +24,9 @@ const notesSchema = new Schema(
       },
       UserId: {
         type: String,
+      },
+      pinnotes: {
+        type: Boolean,
       }
     },
   {

@@ -154,3 +154,19 @@ export const trashNote = async (req, res, next) => {
       });
     }
   };
+
+  export const pinnotes = async (req, res, next) => {
+    try {
+      const data = await NoteService.pinnotes(req.params._id,req.body.UserId);
+      res.status(HttpStatus.ACCEPTED).json({
+        code: HttpStatus.ACCEPTED,
+        data: data,
+        message: 'note pin successfully'
+      });
+    } catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: HttpStatus.BAD_REQUEST,
+        message: 'enter the correct note id'
+      });
+    }
+  };
