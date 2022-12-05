@@ -92,11 +92,14 @@ export const trashNote = async (_id,UserId) => {
   };
 
   //add Collaborators to note
-export const addCollaborator = async (_id, Collaborators) => {
-  const Check = await User.find({ id: Collaborators })
+export const addCollaborator = async (_id,body) => {
+  const Check = await User.findOne({ Username:body.Collaborators })
+  console.log("check==========>",Check)
   if (Check != null) {
-    const data = await Notes.findByIdAndUpdate({ _id: _id }, 
-      { $addToSet: { Collaborators: Collaborators } }, 
+    const data = await Notes.findOneAndUpdate({ _id:_id,UserId:body.UserId }, 
+      { $addToSet: {  Collaborators:body.Collaborators } }, 
+     // console.log("corabator=====================>",typeof:$addToSet),
+     
       { new: true });
     return data;
   }

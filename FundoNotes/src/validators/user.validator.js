@@ -36,3 +36,17 @@ export const newNotesValidator = (req, res, next) => {
 };
 
 
+export const CollaboratorValidator = (req, res, next) => {
+  const schema = Joi.object({
+    Collaborators: Joi.string().email()
+  });
+  const { error, value } = schema.validate(req.body);
+  if (error) {
+    next(error);
+  } else {
+    req.validateBody=value
+    next();
+  }
+};
+
+

@@ -1,6 +1,6 @@
 import { bool, boolean, string } from '@hapi/joi';
 import { Schema, model } from 'mongoose';
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 
 const notesSchema = new Schema(
   {
@@ -29,10 +29,10 @@ const notesSchema = new Schema(
       pinnotes: {
         type: Boolean,
       },
-      collaborators: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      }],
+      Collaborators: [{
+        type:String
+        
+      }]
     },
   {
     timestamps: true

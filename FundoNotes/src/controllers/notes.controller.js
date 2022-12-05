@@ -174,9 +174,9 @@ export const trashNote = async (req, res, next) => {
   // Add A Collaborator //
  export const addCollaborator = async (req, res, next) => {
   try {
-    const data = await NoteService.addCollaborator(req.params._id,req.body.Collaborators);
-    res.status(HttpStatus.CREATED).json({
-      code: HttpStatus.CREATED,
+    const data = await NoteService.addCollaborator(req.params._id,req.body);
+    res.status(HttpStatus.ACCEPTED).json({
+      code: HttpStatus.ACCEPTED,
       data: data,
       message: 'collaborator added successfully'
     });

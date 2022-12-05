@@ -1,7 +1,7 @@
 import express from 'express';
 import * as notesController from '../controllers/notes.controller';
 import { userAuth } from '../middlewares/auth.middleware';
-import  {newNotesValidator}  from '../validators/user.validator';
+import  {newNotesValidator,CollaboratorValidator}  from '../validators/user.validator';
 import { redisCheck ,redisCheckGetById} from '../middlewares/redis.middleware';
 
 const router = express.Router();
@@ -31,6 +31,6 @@ router.put('/:_id/trash', userAuth, notesController.trashNote);
 router.put('/:_id/pin', userAuth, notesController.pinnotes);
 
 //route to add collaborator it note
-router.post('/:_id/addcollab', notesController.addCollaborator);
+router.put('/:_id/addcollab', CollaboratorValidator,userAuth,notesController.addCollaborator);
 
 export default router;
