@@ -30,9 +30,9 @@ const notesSchema = new Schema(
         type: Boolean,
       },
       Collaborators: [{
-        type:String
+        type: String
         
-      }]
+      }],
     },
   {
     timestamps: true

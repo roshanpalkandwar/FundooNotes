@@ -107,7 +107,7 @@ export const addCollaborator = async (_id,body) => {
 
 //Delete delete Collaborators from note
 export const deleteCollab = async (_id, Collaborators) => {
-  const data = await Notes.findByIdAndUpdate({ _id: _id }, 
+  const data = await Notes.findByIdAndUpdate({ _id: _id,Collaborators:Collaborators.Username }, 
     { 
       $pull: { 
         Collaborators: Collaborators
