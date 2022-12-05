@@ -188,4 +188,20 @@ export const trashNote = async (req, res, next) => {
   }
 };
 
+export const deleteCollab = async (req, res, next) => {
+  try {
+      const data = await NoteService.deleteCollab(req.params._id, req.body.Collaborators);
+      res.status(HttpStatus.OK).json({
+          code: HttpStatus.OK,
+          data: data,
+          message: 'Collaborators deleted successfully'
+      });
+  } catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({
+          code: HttpStatus.BAD_REQUEST,
+          message: `${error}`
+      });
+  }
+};
+
   
